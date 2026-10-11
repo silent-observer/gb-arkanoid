@@ -118,6 +118,13 @@ MainLoop:
     jr c, .waitVBlank ; loop if yes
 
     ; Update ball coordinates
+    ld hl, 0xFE00
+    ld a, [hl]
+    add a, b
+    ld [hl+], a
+    ld a, [hl]
+    add a, c
+    ld [hl+], a
     jr MainLoop
 
 .do_nothing:
