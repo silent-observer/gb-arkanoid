@@ -112,6 +112,11 @@ MainLoop:
 .skip_down:
 
     ; Wait for VBlank
+.waitVBlank:
+    ld a, [rLY] ; A <- LY
+    cp a, LY_VBLANK ; A < 144?
+    jr c, .waitVBlank ; loop if yes
+
     ; Update ball coordinates
     jr MainLoop
 
