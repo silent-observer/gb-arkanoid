@@ -33,7 +33,7 @@ WaitVBlank:
     call ZeroFn
 
     ; Zero out OAM
-    ld hl, 0xFE00
+    ld hl, STARTOF(OAM)
     ld de, OAM_SIZE
     call ZeroFn
 
@@ -52,7 +52,7 @@ WaitVBlank:
     jr c, WaitVBlank2 ; loop if yes
 
     ; display object
-    ld hl, 0xFE00
+    ld hl, STARTOF(OAM)
     ld a, 100
     ld [hl+], a
     ld a, 150
@@ -124,7 +124,7 @@ MainLoop:
     jr nz, .skip
 
     ; Update ball coordinates
-    ld hl, 0xFE00
+    ld hl, STARTOF(OAM)
     ld a, [hl]
     add a, b
     ld [hl+], a
