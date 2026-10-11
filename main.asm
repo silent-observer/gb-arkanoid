@@ -47,6 +47,16 @@ ZeroTileMapLoop:
     cp a, LY_VBLANK ; A < 144?
     jr c, WaitVBlank2 ; loop if yes
 
+    ; display object
+    ld hl, 0xFE00
+    ld a, 100
+    ld [hl+], a
+    ld a, 150
+    ld [hl+], a
+    xor a, a
+    ld [hl+], a
+    ld [hl+], a
+
     ; print(Text, 0x98E5)
     ld bc, Text
     ld hl, 0x98E5
