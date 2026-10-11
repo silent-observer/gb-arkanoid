@@ -9,6 +9,10 @@ WaitVBlank:
     cp a, 144 ; A < 144?
     jr c, WaitVBlank ; loop if yes
 
+    ; Turn off LCD
+    xor a, a
+    ld [0xFF40], a
+
 SECTION "Data", ROM0[0x1000]
 tiles:
     INCBIN "font.2bpp"
