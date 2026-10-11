@@ -74,6 +74,9 @@ SECTION "Data", ROM0[0x1000]
 Tiles:
     INCBIN "font.2bpp"
 .End:
+ObjTiles:
+    INCBIN "ball.2bpp"
+.End:
 
 Text:
     db "Hello world!", 0
