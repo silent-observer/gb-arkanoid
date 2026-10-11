@@ -13,6 +13,9 @@ WaitVBlank:
     xor a, a
     ld [0xFF40], a
 
+Done:
+    jr Done
+
 SECTION "Data", ROM0[0x1000]
 tiles:
     INCBIN "font.2bpp"
