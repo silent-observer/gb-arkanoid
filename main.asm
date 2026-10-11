@@ -50,7 +50,7 @@ ZeroTileMapLoop:
     ld [hl+], a
 
     ; Turn on LCD
-    ld a, 0x88
+    ld a, 0x81
     ld [0xFF40], a
 
 Done:
