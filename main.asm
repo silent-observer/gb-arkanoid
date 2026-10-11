@@ -117,6 +117,12 @@ MainLoop:
     cp a, LY_VBLANK ; A < 144?
     jr c, .waitVBlank ; loop if yes
 
+    ; Only execute every 5th frame
+    ld a, [vFrameCounter]
+    inc a
+    cp a, 5
+    jr nz, .skip
+
     ; Update ball coordinates
     ld hl, 0xFE00
     ld a, [hl]
@@ -125,6 +131,10 @@ MainLoop:
     ld a, [hl]
     add a, c
     ld [hl+], a
+
+    xor a, a
+.skip:
+    ld [vFrameCounter], a
     jr MainLoop
 
 .do_nothing:
@@ -182,3 +192,7 @@ ObjTiles:
 
 Text:
     db "Hello world!", 0
+
+
+SECTION "Global", WRAM0
+vFrameCounter: db
