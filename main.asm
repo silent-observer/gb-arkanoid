@@ -30,13 +30,12 @@ WaitVBlank:
     ; Zero out the tile map
     ld hl, TILEMAP0
     ld de, 1024
-ZeroTileMapLoop:
-    xor a, a
-    ld [hl+], a
-    dec de
-    ld a, d
-    or a, e ; a = d | e
-    jr nz, ZeroTileMapLoop
+    call ZeroFn
+
+    ; Zero out OAM
+    ld hl, 0xFE00
+    ld de, OAM_SIZE
+    call ZeroFn
 
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON
@@ -79,6 +78,19 @@ CopyFn:
     or a, e ; a = d | e
     jr nz, .loop
     ret
+
+; HL is dst_addr
+; DE is count
+; A is overwritten
+; BC is preserved
+ZeroFn:
+.loop:
+    xor a, a
+    ld [hl+], a
+    dec de
+    ld a, d
+    or a, e ; a = d | e
+    jr nz, .loop
 
 ; BC is string_addr
 ; HL is tilemap_addr
