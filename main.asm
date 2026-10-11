@@ -39,14 +39,19 @@ ZeroTileMapLoop:
     or a, e ; a = d | e
     jr nz, ZeroTileMapLoop
 
+    ; Turn on LCD
+    ld a, LCDC_ON | LCDC_BG_ON
+    ld [rLCDC], a
+
+    WaitVBlank2:
+    ld a, [rLY] ; A <- LY
+    cp a, LY_VBLANK ; A < 144?
+    jr c, WaitVBlank2 ; loop if yes
+
     ; print(Text, 0x98E5)
     ld bc, Text
     ld hl, 0x98E5
     call PrintFn
-
-    ; Turn on LCD
-    ld a, LCDC_ON | LCDC_BG_ON
-    ld [rLCDC], a
 
 Done:
     jr Done
