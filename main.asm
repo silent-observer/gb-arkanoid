@@ -7,17 +7,17 @@ SECTION "Header", ROM0[0x100]
 EntryPoint:
     ; Code goes here
 WaitVBlank:
-    ld a, [0xFF44] ; A <- LY
-    cp a, 144 ; A < 144?
+    ld a, [rLY] ; A <- LY
+    cp a, LY_VBLANK ; A < 144?
     jr c, WaitVBlank ; loop if yes
 
     ; Turn off LCD
     xor a, a
-    ld [0xFF40], a
+    ld [rLCDC], a
 
     ; Copy tile data
     ld bc, Tiles ; source
-    ld hl, 0x9000 ; destination
+    ld hl, TILEBLOCK2 ; destination
     ld de, Tiles.End - Tiles ; counter
 CopyTilesLoop:
     ld a, [bc]
@@ -29,7 +29,7 @@ CopyTilesLoop:
     jr nz, CopyTilesLoop
 
     ; Zero out the tile map
-    ld hl, 0x9800
+    ld hl, TILEMAP0
     ld de, 1024
 ZeroTileMapLoop:
     xor a, a
@@ -52,8 +52,8 @@ ZeroTileMapLoop:
     ld [hl+], a
 
     ; Turn on LCD
-    ld a, 0x81
-    ld [0xFF40], a
+    ld a, LCDC_ON | LCDC_BG_ON
+    ld [rLCDC], a
 
 Done:
     jr Done
@@ -62,3 +62,4 @@ SECTION "Data", ROM0[0x1000]
 Tiles:
     INCBIN "font.2bpp"
 .End:
+    
