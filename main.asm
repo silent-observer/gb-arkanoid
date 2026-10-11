@@ -43,7 +43,7 @@ WaitVBlank:
     ld [rOBP1], a
 
     ; Turn on LCD
-    ld a, LCDC_ON | LCDC_BG_ON
+    ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
 
     WaitVBlank2:
