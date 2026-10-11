@@ -39,17 +39,10 @@ ZeroTileMapLoop:
     or a, e ; a = d | e
     jr nz, ZeroTileMapLoop
 
-    ; Hardcode text
+    ; print(Text, 0x98E5)
+    ld bc, Text
     ld hl, 0x98E5
-    ld a, 0x28 ; 'H'
-    ld [hl+], a
-    ld a, 0x45 ; 'e'
-    ld [hl+], a
-    ld a, 0x4C ; 'l'
-    ld [hl+], a
-    ld [hl+], a
-    ld a, 0x4F ; 'o'
-    ld [hl+], a
+    call PrintFn
 
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON
@@ -58,8 +51,24 @@ ZeroTileMapLoop:
 Done:
     jr Done
 
+; BC is string_addr
+; HL is tilemap_addr
+; A is overwritten
+; DE is not affected
+PrintFn:
+.loop:
+    ld a, [bc] ; a <- [string_addr]
+    or a, a ; set flags according to a
+    ret z ; if a == 0: return
+    sub a, 0x20 ; a -= 0x20
+    ld [hl+], a ; [tilemap_addr] <- a
+    inc bc
+    jr .loop ; loop back
+
 SECTION "Data", ROM0[0x1000]
 Tiles:
     INCBIN "font.2bpp"
 .End:
-    
+
+Text:
+    db "Hello world!", 0
