@@ -37,6 +37,18 @@ ZeroTileMapLoop:
     or a, e ; a = d | e
     jr nz, ZeroTileMapLoop
 
+    ; Hardcode text
+    ld hl, 0x98E5
+    ld a, 0x28 ; 'H'
+    ld [hl+], a
+    ld a, 0x45 ; 'e'
+    ld [hl+], a
+    ld a, 0x4C ; 'l'
+    ld [hl+], a
+    ld [hl+], a
+    ld a, 0x4F ; 'o'
+    ld [hl+], a
+
     ; Turn on LCD
     ld a, 0x88
     ld [0xFF40], a
