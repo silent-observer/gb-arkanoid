@@ -26,6 +26,17 @@ CopyTilesLoop:
     or a, e ; a = d | e
     jr nz, CopyTilesLoop
 
+    ; Zero out the tile map
+    ld hl, 0x9800
+    ld de, 1024
+ZeroTileMapLoop:
+    xor a, a
+    ld [hl+], a
+    dec de
+    ld a, d
+    or a, e ; a = d | e
+    jr nz, ZeroTileMapLoop
+
 Done:
     jr Done
 
