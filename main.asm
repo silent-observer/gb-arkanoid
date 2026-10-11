@@ -37,6 +37,10 @@ ZeroTileMapLoop:
     or a, e ; a = d | e
     jr nz, ZeroTileMapLoop
 
+    ; Turn on LCD
+    ld a, 0x88
+    ld [0xFF40], a
+
 Done:
     jr Done
 
