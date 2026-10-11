@@ -19,14 +19,13 @@ WaitVBlank:
     ld bc, Tiles ; source
     ld hl, TILEBLOCK2 ; destination
     ld de, Tiles.End - Tiles ; counter
-CopyTilesLoop:
-    ld a, [bc]
-    ld [hl+], a
-    inc bc
-    dec de
-    ld a, d
-    or a, e ; a = d | e
-    jr nz, CopyTilesLoop
+    call CopyFn
+
+    ; Copy object tile data
+    ld bc, ObjTiles ; source
+    ld hl, TILEBLOCK0 ; destination
+    ld de, ObjTiles.End - ObjTiles ; counter
+    call CopyFn
 
     ; Zero out the tile map
     ld hl, TILEMAP0
@@ -55,6 +54,21 @@ ZeroTileMapLoop:
 
 Done:
     jr Done
+
+; BC is src_addr
+; HL is dst_addr
+; DE is count
+; A is overwritten
+CopyFn:
+.loop:
+    ld a, [bc]
+    ld [hl+], a
+    inc bc
+    dec de
+    ld a, d
+    or a, e ; a = d | e
+    jr nz, .loop
+    ret
 
 ; BC is string_addr
 ; HL is tilemap_addr
