@@ -87,7 +87,30 @@ MainLoop:
     and a, 0x0F
     or a, b
     xor a, 0xFF
+
     ; Calculate position change
+    ld bc, 0 ; Δy <- 0, Δx <- 0
+
+    bit 0, a ; is bit 0 in a set? (right key)
+    jr z, .skip_right ; if not, skip
+    inc c
+.skip_right:
+
+    bit 1, a ; is bit 1 in a set? (left key)
+    jr z, .skip_left ; if not, skip
+    dec c
+.skip_left:
+
+    bit 2, a ; is bit 2 in a set? (up key)
+    jr z, .skip_up ; if not, skip
+    dec b
+.skip_up:
+
+    bit 3, a ; is bit 3 in a set? (down key)
+    jr z, .skip_down ; if not, skip
+    inc b
+.skip_down:
+
     ; Wait for VBlank
     ; Update ball coordinates
     jr MainLoop
