@@ -14,9 +14,9 @@ WaitVBlank:
     ld [0xFF40], a
 
     ; Copy tile data
-    ld bc, 0x1000
-    ld hl, 0x9000
-    ld de, 1536
+    ld bc, Tiles ; source
+    ld hl, 0x9000 ; destination
+    ld de, Tiles.End - Tiles ; counter
 CopyTilesLoop:
     ld a, [bc]
     ld [hl+], a
@@ -30,5 +30,6 @@ Done:
     jr Done
 
 SECTION "Data", ROM0[0x1000]
-tiles:
+Tiles:
     INCBIN "font.2bpp"
+.End:
