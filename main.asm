@@ -13,6 +13,19 @@ WaitVBlank:
     xor a, a
     ld [0xFF40], a
 
+    ; Copy tile data
+    ld bc, 0x1000
+    ld hl, 0x9000
+    ld de, 1536
+CopyTilesLoop:
+    ld a, [bc]
+    ld [hl+], a
+    inc bc
+    dec de
+    ld a, d
+    or a, e ; a = d | e
+    jr nz, CopyTilesLoop
+
 Done:
     jr Done
 
