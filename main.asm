@@ -1,3 +1,5 @@
+INCLUDE "hardware.inc"
+
 SECTION "Header", ROM0[0x100]
   jp EntryPoint
   ds 0x150 - @, 0 ; Make room for the header
