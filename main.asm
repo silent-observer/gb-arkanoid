@@ -37,6 +37,11 @@ WaitVBlank:
     ld de, OAM_SIZE
     call ZeroFn
 
+    ; Set palletes
+    ld a, 0b11_10_01_00
+    ld [rOBP0], a
+    ld [rOBP1], a
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON
     ld [rLCDC], a
