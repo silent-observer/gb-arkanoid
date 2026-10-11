@@ -68,10 +68,32 @@ WaitVBlank:
 
 MainLoop:
     ; Read inputs
+    ld a, JOYP_GET_BUTTONS
+    ld [rJOYP], a
+    call .do_nothing
+    ld a, [rJOYP]
+    ld a, [rJOYP]
+    ld a, [rJOYP]
+    and a, 0x0F
+    swap a
+    ld b, a
+
+    ld a, JOYP_GET_CTRL_PAD
+    ld [rJOYP], a
+    call .do_nothing
+    ld a, [rJOYP]
+    ld a, [rJOYP]
+    ld a, [rJOYP]
+    and a, 0x0F
+    or a, b
+    xor a, 0xFF
     ; Calculate position change
     ; Wait for VBlank
     ; Update ball coordinates
     jr MainLoop
+
+.do_nothing:
+    ret
 
 ; BC is src_addr
 ; HL is dst_addr
