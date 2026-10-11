@@ -66,8 +66,12 @@ WaitVBlank:
     ld hl, 0x98E5
     call PrintFn
 
-Done:
-    jr Done
+MainLoop:
+    ; Read inputs
+    ; Calculate position change
+    ; Wait for VBlank
+    ; Update ball coordinates
+    jr MainLoop
 
 ; BC is src_addr
 ; HL is dst_addr
