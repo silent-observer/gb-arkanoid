@@ -42,6 +42,21 @@ WaitVBlank:
     ld [rOBP0], a
     ld [rOBP1], a
 
+    ; Init background
+    ld hl, TILEMAP0
+    ld a, 0x60
+    ld [hl+], a
+
+    inc a ; a = 0x61
+    ld b, 18
+.top_loop:
+    ld [hl+], a
+    dec b
+    jr nz, .top_loop
+
+    inc a ; a = 0x62
+    ld [hl+], a
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
