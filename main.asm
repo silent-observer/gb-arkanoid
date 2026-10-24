@@ -103,10 +103,60 @@ WaitVBlank:
     ld [hl+], a
     ld [hl+], a
 
+    ; display paddle
+    ld b, 152 ; Y = 152
+    ld a, [vPaddleX]
+    add a, 8
+    ld c, a ; X = vPaddleX + 8
+    ld d, 1 ; Tile Index = 1
+
+    ld a, b ; Y
+    ld [hl+], a
+    ld a, c ; X
+    ld [hl+], a
+    ld a, d ; Tile Index
+    ld [hl+], a
+    xor a, a ; Attr
+    ld [hl+], a
+
+    inc d ; Tile Index = 2
+
+    ld a, b ; Y = 152
+    ld [hl+], a
+    ld a, c ; X = vPaddleX + 16
+    add a, 8
+    ld [hl+], a
+    ld a, d ; Tile Index = 2
+    ld [hl+], a
+    xor a, a ; Attr
+    ld [hl+], a
+
+    ld a, b ; Y = 152
+    ld [hl+], a
+    ld a, c ; X = vPaddleX + 24
+    add a, 16
+    ld [hl+], a
+    ld a, d ; Tile Index = 2
+    ld [hl+], a
+    xor a, a ; Attr
+    ld [hl+], a
+
+    inc d ; Tile Index = 3
+
+    ld a, b ; Y = 152
+    ld [hl+], a
+    ld a, c ; X = vPaddleX + 32
+    add a, 24
+    ld [hl+], a
+    ld a, d ; Tile Index = 3
+    ld [hl+], a
+    xor a, a ; Attr
+    ld [hl+], a
+
     ; print(Text, 0x98E5)
-    ld bc, Text
-    ld hl, 0x98E5
-    call PrintFn
+    ; ld bc, Text
+    ; ld hl, 0x98E5
+    ; call PrintFn
 
 MainLoop:
     ; Read inputs
