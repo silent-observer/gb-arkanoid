@@ -179,6 +179,7 @@ MainLoop:
     and a, 0x0F
     or a, b
     xor a, 0xFF
+    ld b, a
 
     ; Calculate position change
 
