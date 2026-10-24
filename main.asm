@@ -167,6 +167,7 @@ ZeroFn:
     ld a, d
     or a, e ; a = d | e
     jr nz, .loop
+    ret
 
 ; BC is string_addr
 ; HL is tilemap_addr
