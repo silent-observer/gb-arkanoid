@@ -57,6 +57,26 @@ WaitVBlank:
     inc a ; a = 0x62
     ld [hl+], a
 
+    ld l, 0x20 ; hl = 0x9820
+    inc a ; a = 0x63
+    ld de, 32
+    ld b, 17
+.left_loop:
+    ld [hl], a
+    add hl, de
+    dec b
+    jr nz, .left_loop
+
+    inc a ; a = 0x64
+    inc a ; a = 0x65
+    ld hl, TILEMAP0 + 32 * 1 + 19 ; addr of (1, 19)
+    ld b, 17
+.right_loop:
+    ld [hl], a
+    add hl, de
+    dec b
+    jr nz, .right_loop
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
