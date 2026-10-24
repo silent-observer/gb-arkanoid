@@ -92,6 +92,15 @@ WaitVBlank:
     ld [vBallX + 1], a
     ld [vBallY + 1], a
 
+    ld a, 0x00
+    ld [vBallVelY + 1], a
+    ld a, 0x80
+    ld [vBallVelY], a
+    ld a, 0x00
+    ld [vBallVelX + 1], a
+    ld a, 0x40
+    ld [vBallVelX], a
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
@@ -209,6 +218,28 @@ MainLoop:
 
     ld [vPaddleX], a
 
+    ; Update ball coordinates
+    ld hl, vBallVelX
+    ld a, [vBallX]
+    add a, [hl]
+    inc hl
+    ld [vBallX], a
+
+    ld a, [vBallX + 1]
+    adc a, [hl]
+    inc hl
+    ld [vBallX + 1], a
+
+    ld a, [vBallY]
+    add a, [hl]
+    inc hl
+    ld [vBallY], a
+
+    ld a, [vBallY + 1]
+    adc a, [hl]
+    ld [vBallY + 1], a
+
+
     ; Wait for VBlank
 .waitVBlank:
     ld a, [rLY] ; A <- LY
@@ -316,3 +347,5 @@ vFrameCounter: db
 vPaddleX: db
 vBallX: dw
 vBallY: dw
+vBallVelX: dw
+vBallVelY: dw
