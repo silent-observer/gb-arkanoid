@@ -181,27 +181,20 @@ MainLoop:
     xor a, 0xFF
 
     ; Calculate position change
-    ld bc, 0 ; Δy <- 0, Δx <- 0
 
-    bit 0, a ; is bit 0 in a set? (right key)
+    ld a, [vPaddleX]
+    
+    bit 0, b ; is bit 0 in a set? (right key)
     jr z, .skip_right ; if not, skip
-    inc c
+    inc a
 .skip_right:
 
-    bit 1, a ; is bit 1 in a set? (left key)
+    bit 1, b ; is bit 1 in a set? (left key)
     jr z, .skip_left ; if not, skip
-    dec c
+    dec a
 .skip_left:
 
-    bit 2, a ; is bit 2 in a set? (up key)
-    jr z, .skip_up ; if not, skip
-    dec b
-.skip_up:
-
-    bit 3, a ; is bit 3 in a set? (down key)
-    jr z, .skip_down ; if not, skip
-    inc b
-.skip_down:
+    ld [vPaddleX], a
 
     ; Wait for VBlank
 .waitVBlank:
@@ -215,14 +208,26 @@ MainLoop:
     cp a, 5
     jr nz, .skip
 
-    ; Update ball coordinates
-    ld hl, STARTOF(OAM)
-    ld a, [hl]
-    add a, b
-    ld [hl+], a
-    ld a, [hl]
-    add a, c
-    ld [hl+], a
+    ; Update paddle coordinates
+    ld hl, STARTOF(OAM) + 5
+    ld bc, 4
+
+    ld a, [vPaddleX]
+
+    add a, 8
+    ld [hl], a
+    add hl, bc
+
+    add a, 8
+    ld [hl], a
+    add hl, bc
+
+    add a, 8
+    ld [hl], a
+    add hl, bc
+
+    add a, 8
+    ld [hl], a
 
     xor a, a
 .skip:
