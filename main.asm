@@ -202,12 +202,6 @@ MainLoop:
     cp a, LY_VBLANK ; A < 144?
     jr c, .waitVBlank ; loop if yes
 
-    ; Only execute every 5th frame
-    ld a, [vFrameCounter]
-    inc a
-    cp a, 5
-    jr nz, .skip
-
     ; Update paddle coordinates
     ld hl, STARTOF(OAM) + 5
     ld bc, 4
@@ -229,10 +223,12 @@ MainLoop:
     add a, 8
     ld [hl], a
 
-    xor a, a
-.skip:
-    ld [vFrameCounter], a
-    jr MainLoop
+    ; Wait for the start of new frame
+.waitFrame:
+    ld a, [rLY] ; A <- LY
+    cp a, LY_VBLANK ; A < 144?
+    jr nc, .waitFrame ; loop if no
+    jp MainLoop
 
 .do_nothing:
     ret
