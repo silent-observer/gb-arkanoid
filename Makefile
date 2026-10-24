@@ -10,4 +10,4 @@ main.raw.gb: main.o
 %.2bpp: %.png
 	rgbgfx -o $@ $<
 
-main.asm: ball.2bpp font.2bpp block.2bpp paddle.2bpp hardware.inc
+main.asm: ball.2bpp font.2bpp block.2bpp paddle.2bpp bg.2bpp hardware.inc
