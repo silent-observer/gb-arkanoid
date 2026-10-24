@@ -184,15 +184,16 @@ MainLoop:
     ; Calculate position change
 
     ld a, [vPaddleX]
+    ld c, 2 ; Paddle speed
     
     bit 0, b ; is bit 0 in a set? (right key)
     jr z, .skip_right ; if not, skip
-    inc a
+    add a, c
 .skip_right:
 
     bit 1, b ; is bit 1 in a set? (left key)
     jr z, .skip_left ; if not, skip
-    dec a
+    sub a, c
 .skip_left:
 
     ld [vPaddleX], a
