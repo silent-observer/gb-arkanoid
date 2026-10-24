@@ -188,11 +188,15 @@ MainLoop:
     
     bit 0, b ; is bit 0 in a set? (right key)
     jr z, .skip_right ; if not, skip
+    cp a, 120 ; X < 120?
+    jr nc, .skip_right ; skip if no
     add a, c
 .skip_right:
 
     bit 1, b ; is bit 1 in a set? (left key)
     jr z, .skip_left ; if not, skip
+    cp a, 9 ; X < 9?
+    jr c, .skip_left ; skip if yes
     sub a, c
 .skip_left:
 
