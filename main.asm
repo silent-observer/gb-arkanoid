@@ -78,6 +78,12 @@ WaitVBlank:
     dec b
     jr nz, .right_loop
 
+    ; Init global variables
+    xor a, a
+    ld [vFrameCounter], a
+    ld a, 60
+    ld [vPaddleX], a
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
@@ -234,5 +240,6 @@ Text:
     db "Hello world!", 0
 
 
-SECTION "Global", WRAM0
+SECTION "Global", HRAM
 vFrameCounter: db
+vPaddleX: db
