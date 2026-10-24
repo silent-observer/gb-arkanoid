@@ -103,9 +103,8 @@ WaitVBlank:
 
     ; display object
     ld hl, STARTOF(OAM)
-    ld a, 100
+    ld a, 80
     ld [hl+], a
-    ld a, 150
     ld [hl+], a
     xor a, a
     ld [hl+], a
@@ -215,6 +214,13 @@ MainLoop:
     ld a, [rLY] ; A <- LY
     cp a, LY_VBLANK ; A < 144?
     jr c, .waitVBlank ; loop if yes
+
+    ; Update ball coordinates
+    ld hl, STARTOF(OAM)
+    ld a, [vBallY]
+    ld [hl+], a
+    ld a, [vBallX]
+    ld [hl+], a
 
     ; Update paddle coordinates
     ld hl, STARTOF(OAM) + 5
