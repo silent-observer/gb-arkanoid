@@ -248,9 +248,9 @@ MainLoop:
 
     ; Update ball coordinates
     ld hl, STARTOF(OAM)
-    ld a, [vBallY]
+    ld a, [vBallY + 1]
     ld [hl+], a
-    ld a, [vBallX]
+    ld a, [vBallX + 1]
     ld [hl+], a
 
     ; Update paddle coordinates
