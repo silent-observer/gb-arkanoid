@@ -39,6 +39,7 @@ WaitVBlank:
 
     ; Set palletes
     ld a, 0b11_10_01_00
+    ld [rBGP], a
     ld [rOBP0], a
     ld [rOBP1], a
 
