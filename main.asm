@@ -84,6 +84,14 @@ WaitVBlank:
     ld a, 60
     ld [vPaddleX], a
 
+    xor a, a
+    ld [vBallX], a
+    ld [vBallY], a
+
+    ld a, 80
+    ld [vBallX + 1], a
+    ld [vBallY + 1], a
+
     ; Turn on LCD
     ld a, LCDC_ON | LCDC_BG_ON | LCDC_OBJ_ON
     ld [rLCDC], a
@@ -300,3 +308,5 @@ Text:
 SECTION "Global", HRAM
 vFrameCounter: db
 vPaddleX: db
+vBallX: dw
+vBallY: dw
