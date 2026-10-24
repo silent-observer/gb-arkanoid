@@ -239,6 +239,39 @@ MainLoop:
     adc a, [hl]
     ld [vBallY + 1], a
 
+    ; Check collisions
+    ld a, [vBallX + 1]
+    cp a, 16 ; X < 16?
+    jr c, .negateX ; goto if yes
+    cp a, 153 ; X < 153?
+    jr c, .skipNegateX ; skip if yes
+.negateX:
+    ld hl, vBallVelX
+    xor a, a
+    ld b, a
+    sub a, [hl]
+    ld [hl+], a
+    ld a, b
+    sbc a, [hl]
+    ld [hl], a
+.skipNegateX:
+
+    ld a, [vBallY + 1]
+    cp a, 24 ; Y < 24?
+    jr c, .negateY ; goto if yes
+    cp a, 144 ; Y < 144?
+    jr c, .skipNegateY ; skip if yes
+.negateY:
+    ld hl, vBallVelY
+    xor a, a
+    ld b, a
+    sub a, [hl]
+    ld [hl+], a
+    ld a, b
+    sbc a, [hl]
+    ld [hl], a
+.skipNegateY:
+
 
     ; Wait for VBlank
 .waitVBlank:
